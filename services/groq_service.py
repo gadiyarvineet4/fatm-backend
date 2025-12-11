@@ -23,6 +23,7 @@ def get_groq_response(user_input: str, system_prompt: str = None) -> str:
         chat_completion = client.chat.completions.create(
             messages=messages,
             model="llama-3.3-70b-versatile",
+            response_format={"type": "json_object"},
         )
         return chat_completion.choices[0].message.content
     except Exception as e:

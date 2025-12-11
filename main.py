@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import engine, get_db, Base
 import models
 import schemas
+import json
 from services.groq_service import get_groq_response
 # Renamed from prompt_engine per file name
 from prompt import PromptEngineer
@@ -48,4 +49,20 @@ def get_movies(input_data: schemas.UserInputCreate, db: Session = Depends(get_db
     db.commit()
     db.refresh(db_input)
 
-    return db_input
+    # 3. Parse LLM response to get recommendations
+    recommendations = []
+    try:
+        response_data = json.loads(llm_response)
+        # Handle case where llm_response isn't perfectly structured or keys differ
+        recommendations = response_data.get("recommendations", [])
+    except json.JSONDecodeError:
+        print("Error decoding JSON from LLM")
+        recommendations = []
+
+    return schemas.UserInputResponse(
+        id=db_input.id,
+        input_text=db_input.input_text,
+        llm_response=db_input.llm_response,
+        created_at=db_input.created_at,
+        recommendations=recommendations
+    )

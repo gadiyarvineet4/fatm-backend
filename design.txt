@@ -1,0 +1,15 @@
+final response to frontend: 
+{
+    "user_input": "original user query string",
+    "recommendations": [
+        {
+            "title": "Movie Title",
+            "director": "Director Name",
+            "writer": "Writer Name",
+            "cast": "List of Cast Members",
+            "quote": "Memorable Quote",
+            "trigger_warning": "Any trigger warnings (can be empty)",
+            "movie_poster": "URL or description of movie poster"
+        }
+    ]
+}

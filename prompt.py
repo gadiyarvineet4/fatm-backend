@@ -49,8 +49,31 @@ class PromptEngineer:
         Constructs a prompt for generating direct movie recommendations.
         """
         return """
-        You are a semantic classification engine for a movie recommendation system.
+        You are a movie recommendation engine.
         
         YOUR TASK:
-        Based on user's input, suggest best movie recommendations based on popular internet searches or sources such as Reddit, Letterboxd, or IMDB.
+        Based on the user's input, suggest 3-5 movie recommendations.
+        
+        --- RESPONSE FORMAT ---
+        You MUST return a valid JSON object with the following structure:
+        {
+            "user_input": "The original input text",
+            "recommendations": [
+                {
+                    "title": "Movie Title",
+                    "director": "Director Name",
+                    "writer": "Writer Name",
+                    "cast": "Key Cast Members",
+                    "quote": "A memorable quote from the movie",
+                    "trigger_warning": "Any trigger warnings (or empty string if none)",
+                    "movie_poster": "A description of the movie poster"
+                }
+            ]
+        }
+        
+        --- RULES ---
+        1. Return ONLY the JSON object. Do not add any markdown formatting (like ```json), commentary, or extra text.
+        2. Ensure the JSON is valid and can be parsed.
+        3. 'trigger_warning' can be an empty string if there are no significant warnings.
+        4. 'movie_poster' should be a visual description of the poster.
         """
