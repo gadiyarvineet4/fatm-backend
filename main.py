@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+import os
 from sqlalchemy.orm import Session
 from database import engine, get_db, Base
 import models
@@ -12,6 +14,17 @@ from prompt import PromptEngineer
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="FATM Backend")
+
+# CORS Configuration
+origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Mock DB for demonstration - User should replace this with actual data source
 DB = {
