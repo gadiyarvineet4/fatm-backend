@@ -30,7 +30,7 @@ def verify_response():
         print("WARNING: No recommendations returned (might be expected depending on LLM)")
     else:
         first_rec = recs[0]
-        required_keys = ["title", "director", "writer", "cast", "quote", "trigger_warning", "movie_poster"]
+        required_keys = ["title", "director", "writer", "cast", "quote", "trigger_warning", "poster_details"]
         missing_keys = [key for key in required_keys if key not in first_rec]
         if missing_keys:
             print(f"FAILED: Missing keys in recommendation: {missing_keys}")

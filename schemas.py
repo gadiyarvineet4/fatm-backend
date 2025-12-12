@@ -12,7 +12,7 @@ class MovieRecommendation(BaseModel):
     cast: str
     quote: str
     trigger_warning: Optional[str] = ""
-    movie_poster: Optional[str] = ""
+    poster_details: Optional[str] = ""
 
 class UserInputResponse(BaseModel):
     id: int

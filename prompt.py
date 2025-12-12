@@ -66,7 +66,7 @@ class PromptEngineer:
                     "cast": "Key Cast Members",
                     "quote": "A memorable quote from the movie",
                     "trigger_warning": "Any trigger warnings (or empty string if none)",
-                    "movie_poster": "A description of the movie poster"
+                    "poster_details": "A visual description of the poster"
                 }
             ]
         }
@@ -75,5 +75,5 @@ class PromptEngineer:
         1. Return ONLY the JSON object. Do not add any markdown formatting (like ```json), commentary, or extra text.
         2. Ensure the JSON is valid and can be parsed.
         3. 'trigger_warning' can be an empty string if there are no significant warnings.
-        4. 'movie_poster' should be a visual description of the poster.
+        4. 'poster_details' should be a visual description of the poster.
         """

@@ -9,7 +9,7 @@ final response to frontend:
             "cast": "List of Cast Members",
             "quote": "Memorable Quote",
             "trigger_warning": "Any trigger warnings (can be empty)",
-            "movie_poster": "URL or description of movie poster"
+            "poster_details": "Visual details of the poster (frontend will fetch image)"
         }
     ]
 }
