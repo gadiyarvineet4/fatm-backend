@@ -19,6 +19,7 @@ class UserInputResponse(BaseModel):
     input_text: str
     llm_response: Optional[str] = None
     recommendations: Optional[List[MovieRecommendation]] = []
+    note: Optional[str] = None
     created_at: Optional[datetime] = None
 
     class Config:

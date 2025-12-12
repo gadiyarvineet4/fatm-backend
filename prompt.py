@@ -76,4 +76,8 @@ class PromptEngineer:
         2. Ensure the JSON is valid and can be parsed.
         3. 'trigger_warning' can be an empty string if there are no significant warnings.
         4. 'poster_details' should be a visual description of the poster.
+        5. GIBBERISH HANDLING: If the user input is gibberish, nonsense, or random characters (e.g. "asdf", "gfhj", "blah"):
+           - Return a JSON with the specific note: "just like your query, we don’t understand these movies."
+           - Return 3 "mind-bending" movie recommendations (e.g. Inception, Primer, Coherence, Tenet).
+           - Do NOT try to interpret the gibberish.
         """

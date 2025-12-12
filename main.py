@@ -51,10 +51,12 @@ def get_movies(input_data: schemas.UserInputCreate):
 
     # 3. Parse LLM response to get recommendations
     recommendations = []
+    note = None
     try:
         response_data = json.loads(llm_response)
         # Handle case where llm_response isn't perfectly structured or keys differ
         recommendations = response_data.get("recommendations", [])
+        note = response_data.get("note")
     except json.JSONDecodeError:
         print("Error decoding JSON from LLM")
         recommendations = []
@@ -64,5 +66,6 @@ def get_movies(input_data: schemas.UserInputCreate):
         input_text=input_data.input_text,
         llm_response=llm_response,
         created_at=None, # No created_at since not saved to DB
-        recommendations=recommendations
+        recommendations=recommendations,
+        note=note
     )
