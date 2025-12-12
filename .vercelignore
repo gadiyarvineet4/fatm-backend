@@ -1,0 +1,12 @@
+# Vercel Ignore
+*.pyc
+__pycache__
+*.db
+.env
+.env.example
+.git
+.gitignore
+design.txt
+test_api.py
+verify_json.py
+README.md

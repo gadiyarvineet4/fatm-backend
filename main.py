@@ -1,17 +1,13 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from sqlalchemy.orm import Session
-from database import engine, get_db, Base
-import models
 import schemas
 import json
 from services.groq_service import get_groq_response
 # Renamed from prompt_engine per file name
 from prompt import PromptEngineer
 
-# Create database tables
-models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI(title="FATM Backend")
 
@@ -42,9 +38,9 @@ def read_root():
     return {"message": "Welcome to FATM Backend"}
 
 @app.post("/getMovies", response_model=schemas.UserInputResponse)
-def get_movies(input_data: schemas.UserInputCreate, db: Session = Depends(get_db)):
+def get_movies(input_data: schemas.UserInputCreate):
     """
-    Accepts string input, gets response from Groq, and saves to database.
+    Accepts string input, gets response from Groq.
     """
     # 1. Generate System Prompt (Using Recommendation Prompt for Testing)
     # system_prompt = prompt_engine.generate_system_prompt()
@@ -52,15 +48,6 @@ def get_movies(input_data: schemas.UserInputCreate, db: Session = Depends(get_db
     
     # 2. Get response from Groq
     llm_response = get_groq_response(input_data.input_text, system_prompt)
-
-    # 2. Save to database
-    db_input = models.UserInput(
-        input_text=input_data.input_text,
-        llm_response=llm_response
-    )
-    db.add(db_input)
-    db.commit()
-    db.refresh(db_input)
 
     # 3. Parse LLM response to get recommendations
     recommendations = []
@@ -73,9 +60,9 @@ def get_movies(input_data: schemas.UserInputCreate, db: Session = Depends(get_db
         recommendations = []
 
     return schemas.UserInputResponse(
-        id=db_input.id,
-        input_text=db_input.input_text,
-        llm_response=db_input.llm_response,
-        created_at=db_input.created_at,
+        id=None, # No ID since not saved to DB
+        input_text=input_data.input_text,
+        llm_response=llm_response,
+        created_at=None, # No created_at since not saved to DB
         recommendations=recommendations
     )

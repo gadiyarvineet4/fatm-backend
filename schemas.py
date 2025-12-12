@@ -15,11 +15,11 @@ class MovieRecommendation(BaseModel):
     poster_details: Optional[str] = ""
 
 class UserInputResponse(BaseModel):
-    id: int
+    id: Optional[int] = None
     input_text: str
     llm_response: Optional[str] = None
     recommendations: Optional[List[MovieRecommendation]] = []
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
