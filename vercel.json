@@ -5,6 +5,12 @@
             "use": "@vercel/python"
         }
     ],
+    "crons": [
+        {
+            "path": "/",
+            "schedule": "*/14 * * * *"
+        }
+    ],
     "routes": [
         {
             "src": "/(.*)",
