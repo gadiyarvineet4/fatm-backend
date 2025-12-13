@@ -1,13 +1,17 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import time
+import logging
 import schemas
 import json
 from services.groq_service import get_groq_response
 # Renamed from prompt_engine per file name
 from prompt import PromptEngineer
 
-
+# Configure logger
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="FATM Backend")
 
@@ -42,6 +46,8 @@ def get_movies(input_data: schemas.UserInputCreate):
     """
     Accepts string input, gets response from Groq.
     """
+    start_time = time.time()
+    
     # 1. Generate System Prompt (Using Recommendation Prompt for Testing)
     # system_prompt = prompt_engine.generate_system_prompt()
     system_prompt = prompt_engine.generate_recommendation_prompt()
@@ -60,6 +66,10 @@ def get_movies(input_data: schemas.UserInputCreate):
     except json.JSONDecodeError:
         print("Error decoding JSON from LLM")
         recommendations = []
+
+    end_time = time.time()
+    duration = end_time - start_time
+    logger.info(f"Total API response time: {duration:.4f} seconds")
 
     return schemas.UserInputResponse(
         id=None, # No ID since not saved to DB
