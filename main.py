@@ -26,16 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mock DB for demonstration - User should replace this with actual data source
-DB = {
-    "sets": {
-        "romance_warm": {"description": "Low stakes, happy endings.", "ids": [1, 2]},
-        "comedy_dark": {"description": "Funny but with dark themes.", "ids": [3, 4]},
-        "sci_fi_futuristic": {"description": "Space travel and future tech.", "ids": [5, 6]}
-    }
-}
-
-prompt_engine = PromptEngineer(DB["sets"])
+prompt_engine = PromptEngineer()
 
 @app.get("/")
 def read_root():
@@ -48,8 +39,7 @@ def get_movies(input_data: schemas.UserInputCreate):
     """
     start_time = time.time()
     
-    # 1. Generate System Prompt (Using Recommendation Prompt for Testing)
-    # system_prompt = prompt_engine.generate_system_prompt()
+    # 1. Generate Recommendation Prompt
     system_prompt = prompt_engine.generate_recommendation_prompt()
     
     # 2. Get response from Groq

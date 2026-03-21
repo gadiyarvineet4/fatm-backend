@@ -1,58 +1,20 @@
 import json
 
 class PromptEngineer:
-    def __init__(self, db_sets: dict):
-        """
-        Initialize with the 'sets' portion of your database.
-        db_sets format: {"category_key": {"description": "...", "ids": [...]}}
-        """
-        self.sets = db_sets
-
-    def _build_menu_string(self) -> str:
-        """
-        Private helper: Iterates through the DB and creates the menu text
-        formatted specifically for the SLM to understand.
-        """
-        menu_lines = []
-        for key, data in self.sets.items():
-            # Creates a line like: - "romance_warm": Low stakes, happy endings.
-            line = f'- "{key}": {data["description"]}'
-            menu_lines.append(line)
-        return "\n".join(menu_lines)
-
-    def generate_system_prompt(self) -> str:
-        """
-        Constructs the final strict prompt to be sent to the SLM.
-        """
-        menu_context = self._build_menu_string()
-
-        return f"""
-        You are a semantic classification engine for a movie recommendation system.
-        
-        YOUR TASK:
-        Map the User's input to the most relevant categories from the AVAILABLE LIST below.
-        
-        --- AVAILABLE CATEGORIES ---
-        {menu_context}
-        
-        --- RULES ---
-        1. Return ONLY a JSON list of strings containing the exact keys from the list above.
-        2. If the user input is complex (e.g., "Funny sci-fi"), select up to 3 matching keys.
-        3. If the input is nonsense or unrelated to movies, return [].
-        4. Do not output any markdown, code blocks, or conversational text. Return ONLY the raw list.
-        
-        Example Output: ["romance_warm", "comedy_dark"]
-        """
+    def __init__(self):
+        pass
 
     def generate_recommendation_prompt(self) -> str:
         """
-        Constructs a prompt for generating direct movie recommendations.
+        Constructs a prompt for generating direct movie recommendations, 
+        specifically focusing on unique and underrated movies.
         """
         return """
-        You are a movie recommendation engine.
+        You are a specialized movie recommendation engine.
         
         YOUR TASK:
-        Based on the user's input, suggest 3-5 movie recommendations.
+        Based on the user's input, suggest exactly 5 unique, underrated, or lesser-known movie recommendations that perfectly match their mood or prompt. 
+        Avoid the most obvious, mainstream blockbusters unless specifically requested. Focus on hidden gems, cult classics, or high-quality films that they might not have seen.
         
         --- RESPONSE FORMAT ---
         You MUST return a valid JSON object with the following structure:
@@ -78,6 +40,6 @@ class PromptEngineer:
         4. 'poster_details' should be a visual description of the poster.
         5. GIBBERISH HANDLING: If the user input is gibberish, nonsense, or random characters (e.g. "asdf", "gfhj", "blah"):
            - Return a JSON with the specific note: "just like your query, we don’t understand these movies."
-           - Return 3 "mind-bending" movie recommendations (e.g. Inception, Primer, Coherence, Tenet).
+           - Return exactly 5 "mind-bending" movie recommendations (e.g. Inception, Primer, Coherence, Tenet, Predestination).
            - Do NOT try to interpret the gibberish.
         """
