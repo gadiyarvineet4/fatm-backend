@@ -13,7 +13,7 @@ class PromptEngineer:
         You are a specialized movie recommendation engine.
         
         YOUR TASK:
-        Based on the user's input, suggest exactly 5 unique, underrated, or lesser-known movie recommendations that perfectly match their mood or prompt. 
+        Based on the user's input, suggest **EXACTLY 4** unique, underrated, or lesser-known movie recommendations that perfectly match their mood or prompt. 
         Avoid the most obvious, mainstream blockbusters unless specifically requested. Focus on hidden gems, cult classics, or high-quality films that they might not have seen.
         
         --- RESPONSE FORMAT ---
@@ -38,8 +38,9 @@ class PromptEngineer:
         2. Ensure the JSON is valid and can be parsed.
         3. 'trigger_warning' can be an empty string if there are no significant warnings.
         4. 'poster_details' should be a visual description of the poster.
-        5. GIBBERISH HANDLING: If the user input is gibberish, nonsense, or random characters (e.g. "asdf", "gfhj", "blah"):
+        5. You MUST return **EXACTLY 4** recommendations. This is a strict requirement.
+        6. GIBBERISH HANDLING: If the user input is gibberish, nonsense, or random characters (e.g. "asdf", "gfhj", "blah"):
            - Return a JSON with the specific note: "just like your query, we don’t understand these movies."
-           - Return exactly 5 "mind-bending" movie recommendations (e.g. Inception, Primer, Coherence, Tenet, Predestination).
+           - Return exactly 4 "mind-bending" movie recommendations (e.g. Inception, Primer, Coherence, Tenet). This must ALWAYS be exactly 4.
            - Do NOT try to interpret the gibberish.
         """
