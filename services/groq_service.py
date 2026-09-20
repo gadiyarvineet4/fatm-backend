@@ -27,9 +27,10 @@ def get_groq_response(user_input: str, system_prompt: str = None) -> str:
 
     try:
         start_time = time.time()
+        model = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
         chat_completion = client.chat.completions.create(
             messages=messages,
-            model="llama-3.3-70b-versatile",
+            model=model,
             response_format={"type": "json_object"},
         )
         end_time = time.time()
