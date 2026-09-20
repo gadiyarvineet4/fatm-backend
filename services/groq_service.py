@@ -27,7 +27,7 @@ def get_groq_response(user_input: str, system_prompt: str = None) -> str:
 
     try:
         start_time = time.time()
-        model = os.environ.get("GROQ_MODEL", "llama3-8b-8192")
+        model = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
         chat_completion = client.chat.completions.create(
             messages=messages,
             model=model,
